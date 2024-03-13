@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "270062334441",
+    "project_id": "yonchat-26999",
+    "storage_bucket": "yonchat-26999.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270062334441:android:7126d4a90487150d9b9b78",
+        "android_client_info": {
+          "package_name": "com.example.yonchat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHxAMH2uDbvh0CVrtEdpx-UX1qje53BlE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
