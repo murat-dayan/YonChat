@@ -9,7 +9,11 @@
         android:id="@+id/loginFragment"
         android:name="com.example.yonchat.presentation.fragments.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/switch_login_fragment_to_home_fragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.yonchat.presentation.fragments.HomeFragment"
