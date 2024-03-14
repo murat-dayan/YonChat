@@ -54,7 +54,7 @@ class LoginFragment : Fragment() {
             val password = binding.fragmentLoginPasswordLayoutId.editText?.text.toString()
 
             if (usermail.isNotEmpty() && password.isNotEmpty()) {
-                loginViewModel.logInWithFirebase(usermail, password)
+                loginViewModel.loginWithFirebase(usermail,password)
             } else {
                 // Kullanıcıya bilgi girişini tamamlaması gerektiğini belirtin.
                 Toast.makeText(requireContext(), "Lütfen tüm bilgileri doldurun", Toast.LENGTH_SHORT).show()

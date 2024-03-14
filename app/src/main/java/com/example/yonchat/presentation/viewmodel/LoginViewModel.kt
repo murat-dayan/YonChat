@@ -3,35 +3,37 @@ package com.example.yonchat.presentation.viewmodel
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.yonchat.di.Application
 import com.example.yonchat.domain.model.User
+import com.example.yonchat.domain.repository.LogInSignInRepository
+import com.example.yonchat.utils.LoginState
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     application: Application,
-    private val firebaseAuth: FirebaseAuth
+    private val logInSignInRepository: LogInSignInRepository
 ): AndroidViewModel(application) {
 
     private val _loginState = MutableLiveData<LoginState>()
     val loginState : LiveData<LoginState> get() = _loginState
 
-    fun logInWithFirebase(email:String,password:String){
-        _loginState.value = LoginState.Loading
 
-        firebaseAuth.signInWithEmailAndPassword(email,password)
-            .addOnSuccessListener {
-                _loginState.value = LoginState.Success
+    fun loginWithFirebase(email:String,password:String){
+        viewModelScope.launch {
+            _loginState.value = LoginState.Loading
+            val result = logInSignInRepository.login(email,password)
+
+            when(result){
+                is LoginState.Success->_loginState.value = LoginState.Success
+                is LoginState.Error -> _loginState.value = LoginState.Error(result.message)
+                else->_loginState.value = LoginState.Loading
             }
-            .addOnFailureListener {
-                _loginState.value = LoginState.Error(it.message)
-            }
+
+        }
     }
 }
 
-sealed class LoginState{
-    object Loading : LoginState()
-    object Success : LoginState()
-    data class Error(val message:String?) : LoginState()
-}
