@@ -10,9 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.yonchat.R
 import com.example.yonchat.databinding.FragmentLoginBinding
-import com.example.yonchat.domain.model.User
-import com.example.yonchat.presentation.viewmodel.LoginState
 import com.example.yonchat.presentation.viewmodel.LoginViewModel
+import com.example.yonchat.utils.LoginState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
