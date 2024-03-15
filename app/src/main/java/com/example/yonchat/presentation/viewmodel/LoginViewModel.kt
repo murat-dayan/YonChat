@@ -5,10 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.yonchat.di.Application
-import com.example.yonchat.domain.model.User
 import com.example.yonchat.domain.repository.LogInSignInRepository
-import com.example.yonchat.utils.LoginState
-import com.google.firebase.auth.FirebaseAuth
+import com.example.yonchat.utils.SignState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,22 +16,44 @@ class LoginViewModel @Inject constructor(
     private val logInSignInRepository: LogInSignInRepository
 ): AndroidViewModel(application) {
 
-    private val _loginState = MutableLiveData<LoginState>()
-    val loginState : LiveData<LoginState> get() = _loginState
+    private val _signState = MutableLiveData<SignState>()
+    val signState : LiveData<SignState> get() = _signState
 
 
     fun loginWithFirebase(email:String,password:String){
         viewModelScope.launch {
-            _loginState.value = LoginState.Loading
+            _signState.value = SignState.Loading
             val result = logInSignInRepository.login(email,password)
 
             when(result){
-                is LoginState.Success->_loginState.value = LoginState.Success
-                is LoginState.Error -> _loginState.value = LoginState.Error(result.message)
-                else->_loginState.value = LoginState.Loading
+                is SignState.Success->_signState.value = SignState.Success
+                is SignState.Error -> _signState.value = SignState.Error(result.message,result.errorCode)
+                else->_signState.value = SignState.Loading
             }
 
         }
+    }
+
+    fun signInWithFirebase(email:String,password:String){
+        viewModelScope.launch {
+            _signState.value = SignState.Loading
+            val result = logInSignInRepository.sign(email,password)
+
+            when(result){
+                is SignState.Success->_signState.value = SignState.Success
+                is SignState.Error -> _signState.value = SignState.Error(result.message,result.errorCode)
+                else->_signState.value = SignState.Loading
+            }
+
+        }
+    }
+
+    fun signOutWithFirebase():Boolean{
+        var result= true
+        viewModelScope.launch {
+            result = logInSignInRepository.signOut()
+        }
+        return  result
     }
 }
 

@@ -17,6 +17,16 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="?attr/actionBarTheme">
+
+        <ImageView
+            android:id="@+id/ic_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_logout"
+
+            />
+
+    </androidx.appcompat.widget.Toolbar>
 
 </FrameLayout>
